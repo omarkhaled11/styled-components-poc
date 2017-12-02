@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 import styled from 'styled-components/native'
 import Button from './Button'
 
-export default class ProductRow extends React.Component {
+export default class SizeRow extends React.Component {
   static propTypes = {
     price: PropTypes.number,
     optionName: PropTypes.string
@@ -33,9 +33,10 @@ export default class ProductRow extends React.Component {
 }
 
 const Container = styled.View`
-height: 40px;
+margin-top: ${props => props.theme.metrics.M1}
+margin-bottom: ${props => props.theme.metrics.M1}
 width: 100%;
-padding-vertical: 2px;
+padding-vertical: ${props => props.theme.metrics.M1};
 display: flex;
 flex-direction: row;
 justify-content: space-between;
@@ -47,12 +48,11 @@ justify-content: flex-start;
 align-items: center;
 `
 const OptionName = styled.Text`
-padding-right: 5px;
-padding-top: 8px;
-font-size: 10;
-font-weight: bold;
+padding-right: ${props => props.theme.metrics.M2};
+padding-top: ${props => props.theme.metrics.M1};
+${props => props.theme.fonts.medium}
 `
 const Price = styled.Text`
-font-size: 16;
-font-weight: bold;
+${props => props.theme.fonts.xLarge}
+color: ${props => props.theme.colors.text};
 `

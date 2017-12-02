@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Text, FlatList } from 'react-native'
+import { Text, FlatList, View } from 'react-native'
 import styled from 'styled-components/native'
-import ProductOptionRow from './ProductOptionRow'
+import SizeRow from './SizeRow'
 
 export default class ProductRow extends React.Component {
   static propTypes = {
     number: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(
+    options: PropTypes.array.isRequired,
+    sizes: PropTypes.arrayOf(
       PropTypes.shape({
         price: PropTypes.number,
         optionName: PropTypes.string
@@ -30,15 +30,15 @@ export default class ProductRow extends React.Component {
           <Title ellipsizeMode={'tail'} numberOfLines={1}>
             {this.props.title && this.props.title.toUpperCase()}
           </Title>
-          <Description ellipsizeMode={'tail'} numberOfLines={2}>
-            {this.props.description}
+          <Description>
+            {this.props.options.join(', ')}
           </Description>
-          <FlatList
-            data={this.props.options}
-            renderItem={({ item }) => <ProductOptionRow {...item} />}
-            keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={() => <ListSeparator />}
-          />
+          {this.props.sizes.map((item, index) => (
+            <View key={index}>
+              {index !== 0 && <ListSeparator />}
+              <SizeRow {...item} />
+            </View>
+          ))}
         </MainContainer>
       </Container>
     )
@@ -64,26 +64,26 @@ display: flex;
 justify-content: center;
 align-items: center;
 width: 20px;
-height: 20px;
+margin-vertical: ${props => props.theme.metrics.M2};
 `
 const NumberText = styled.Text`
 font-weight: bold;
+color: ${props => props.theme.colors.text};
 `
 const MainContainer = styled.View`
 width: 90%;
 `
 const Title = styled.Text`
-font-size: 14;
-font-weight: bold;
-height: 30px;
+${props => props.theme.fonts.xLarge}
+padding-vertical: ${props => props.theme.metrics.M2};
 justify-content: center;
-background-color: white;
+color: ${props => props.theme.colors.text};
 `
 const Description = styled.Text`
-font-size: 10;
-height: 30px;
+${props => props.theme.fonts.small}
+padding-vertical: ${props => props.theme.metrics.M3};
 justify-content: center;
-background-color: white;
+color: ${props => props.theme.colors.text};
 `
 const ListSeparator = styled.View`
 border-top-width: 1px;
